@@ -18,37 +18,31 @@ function Toggle({onToggle, children}) {
 }
 
 const useToggle = () => {
-  return React.useContext(ToggleContext)
+  const ctx = React.useContext(ToggleContext)
+  if (!ctx) {
+    throw new Error("You must be within Toggle's context")
+  }
+  return ctx
 }
 
 function ToggleOn({children}) {
-  const {on} = React.useContext(ToggleContext)
+  const {on} = useToggle()
   return on ? children : null
 }
 
 // 🐨 do the same thing to this that you did to the ToggleOn component
 function ToggleOff({children}) {
-  const {on} = React.useContext(ToggleContext)
+  const {on} = useToggle()
   return on ? null : children
 }
 
 function ToggleButton(props) {
-  const {on, toggle} = React.useContext(ToggleContext)
+  const {on, toggle} = useToggle()
   return <Switch on={on} onClick={toggle} {...props} />
 }
 
 function App() {
-  return (
-    <div>
-      <Toggle>
-        <ToggleOn>The button is on</ToggleOn>
-        <ToggleOff>The button is off</ToggleOff>
-        <div>
-          <ToggleButton />
-        </div>
-      </Toggle>
-    </div>
-  )
+  return <ToggleButton />
 }
 
 export default App
