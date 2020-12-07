@@ -20,7 +20,7 @@ function Toggle({onToggle, children}) {
 const useToggle = () => {
   const ctx = React.useContext(ToggleContext)
   if (!ctx) {
-    throw new Error("You must be within Toggle's context")
+    throw new Error('useToggle must be used in a <Toggle /> component')
   }
   return ctx
 }
